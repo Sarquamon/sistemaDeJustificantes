@@ -1,0 +1,13 @@
+.overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Aprobado {
+  color: green;
+}
+
+.Rechazado {
+  color: red;
+}
