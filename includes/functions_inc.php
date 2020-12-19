@@ -312,10 +312,6 @@ function saveFilepathToDB($conn, $controlNumber, $filepath)
   mysqli_stmt_execute($stmt);
 
   mysqli_stmt_close($stmt);
-
-  header("location: ../uploadAnteproyectoStudent.php?Success");
-
-  exit();
 }
 
 //FUNCIONES DE TABLA
@@ -520,6 +516,126 @@ function changeJustificationState($conn, $idJust, $state)
 
   if (mysqli_stmt_get_result($stmt)) {
     return true;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function emptyInputAsesor($controlNumber, $nombreAsesor, $nameInput, $lastnameInput, $email, $phone, $companyName, $cargo, $openTime, $closeTime, $ampmOpenTime, $ampmCloseTime, $file)
+{
+  if (
+    empty($controlNumber) ||
+    empty($nombreAsesor) ||
+    empty($nameInput) ||
+    empty($lastnameInput) ||
+    (empty($email) && empty($phone)) ||
+    empty($companyName) ||
+    empty($cargo) ||
+    empty($openTime) ||
+    empty($closeTime) ||
+    empty($ampmCloseTime) ||
+    empty($ampmOpenTime) ||
+    empty($file)
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function createAsesor($conn, $nombreAsesor, $nameInput, $lastnameInput, $email, $phone, $companyName, $cargo, $openTime, $closeTime, $ampmOpenTime, $ampmCloseTime)
+{
+  $sql = "INSERT INTO asesoresinternos (nombreAsesor, nameAsesorInt, lastNameMaestro, email, contactNumber, companyName, cargo, horasContacto) VALUES (?,?,?,?,?,?,?,?);";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../index.php");
+    exit();
+  }
+
+  $newHours = strval($openTime) . strval($ampmOpenTime) . "-" . strval($closeTime) . strval($ampmCloseTime);
+
+  mysqli_stmt_bind_param(
+    $stmt,
+    "ssssssss",
+    $nombreAsesor,
+    $nameInput,
+    $lastnameInput,
+    $email,
+    $phone,
+    $companyName,
+    $cargo,
+    $newHours
+  );
+  mysqli_stmt_execute($stmt);
+
+  mysqli_stmt_close($stmt);
+}
+
+function getAsesor($conn, $email, $phone)
+{
+  $sql = "SELECT idAsesorInt from asesoresinternos where email = ? OR contactNumber = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../index.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "ss", $email, $phone);
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+  $row = mysqli_fetch_assoc($resultData);
+  $id = $row["idAsesorInt"];
+
+  if ($id) {
+    return $id;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function updateStudentWithAsesor($conn, $controlNumber, $idAsesor)
+{
+  $sql = "UPDATE alumnos SET intAsesor = ? where controlNumber = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../index.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "ss", $idAsesor, $controlNumber);
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return true;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function getUserAsesor($conn, $controlNumber)
+{
+  $sql = "SELECT * from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt where controlNumber = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../index.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "s", $controlNumber);
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
   } else {
     return false;
   }

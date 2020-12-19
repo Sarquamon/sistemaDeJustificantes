@@ -4,6 +4,18 @@ if (isset($_POST["submit"])) {
   session_start();
   $controlNumber = $_SESSION["controlNumber"];
 
+  $nombreAsesor = $_POST["externalAsesor"];
+  $nameInput = $_POST["nameInput"];
+  $lastnameInput = $_POST["lastnameInput"];
+  $email = $_POST["email"];
+  $phone = $_POST["phone"];
+  $openTime = $_POST["openTime"];
+  $closeTime = $_POST["closeTime"];
+  $ampmOpenTime = $_POST["ampmOpenTime"];
+  $ampmCloseTime = $_POST["ampmCloseTime"];
+  $companyName = $_POST["companyName"];
+  $cargo = $_POST["cargo"];
+
   $file = $_FILES["studentAnteproyectoUpload"]["name"];
 
   $fileName = $_FILES["studentAnteproyectoUpload"]["name"];
@@ -12,33 +24,44 @@ if (isset($_POST["submit"])) {
   $fileError = $_FILES["studentAnteproyectoUpload"]["error"];
   $fileType = $_FILES["studentAnteproyectoUpload"]["type"];
 
-  $fileExt = explode(".", $fileName);
+  require_once("functions_inc.php");
 
-  $fileActualExt = strtolower(end($fileExt));
+  if (emptyInputAsesor($controlNumber, $nombreAsesor, $nameInput, $lastnameInput, $email, $phone, $companyName, $cargo, $openTime, $closeTime, $ampmOpenTime, $ampmCloseTime, $file)) {
+    header("location: ../uploadAnteproyectoStudent.php?error=emptyInput");
+    exit();
+  } else {
+    $fileExt = explode(".", $fileName);
 
-  $allowed = array("doc", "docx", "pdf");
+    $fileActualExt = strtolower(end($fileExt));
 
-  if (in_array($fileActualExt, $allowed)) {
-    if ($fileError === 0) {
-      if ($fileSize < 100000) {
-        $fileNameNew = uniqid("", true) . "." . $fileActualExt;
-        $fileDestination = "../uploads/" . $fileNameNew;
-        move_uploaded_file($fileTmpName, $fileDestination);
+    $allowed = array("doc", "docx", "pdf");
 
-        require_once("./dbh_inc.php");
-        require_once("./functions_inc.php");
+    if (in_array($fileActualExt, $allowed)) {
+      if ($fileError === 0) {
+        if ($fileSize < 100000) {
+          $fileNameNew = uniqid("", true) . "." . $fileActualExt;
+          $fileDestination = "../uploads/" . $fileNameNew;
+          move_uploaded_file($fileTmpName, $fileDestination);
 
-        saveFilepathToDB($conn, $controlNumber, $fileNameNew);
+          require_once("./dbh_inc.php");
+          require_once("./functions_inc.php");
 
-        header("location: ../uploadAnteproyectoStudent.php?Success=" . $fileDestination);
+          saveFilepathToDB($conn, $controlNumber, $fileNameNew);
+          createAsesor($conn, $nombreAsesor, $nameInput, $lastnameInput, $email, $phone, $companyName, $cargo, $openTime, $closeTime, $ampmOpenTime, $ampmCloseTime);
+          $idAsesor = getAsesor($conn, $email, $phone);
+          print_r($idAsesor);
+          updateStudentWithAsesor($conn, $controlNumber, $idAsesor);
+
+          header("location: ../uploadAnteproyectoStudent.php?Success");
+        } else {
+          header("location: ../uploadAnteproyectoStudent.php?error=ArchivoMuyGrande");
+        }
       } else {
-        header("location: ../uploadAnteproyectoStudent.php?error=ArchivoMuyGrande");
+        header("location: ../uploadAnteproyectoStudent.php?error=ErrorAlSubirArchivo");
       }
     } else {
-      header("location: ../uploadAnteproyectoStudent.php?error=ErrorAlSubirArchivo");
+      header("location: ../uploadAnteproyectoStudent.php?error=ArchivoNoPermitido");
     }
-  } else {
-    header("location: ../uploadAnteproyectoStudent.php?error=ArchivoNoPermitido");
   }
 } else {
   header("location: ../uploadAnteproyectoStudent.php?error=Nojalo");
