@@ -365,7 +365,7 @@ function createJustificant($controlNumber, $conn, $reason, $day, $month, $detail
 
   mysqli_stmt_close($stmt);
 
-  header("location: ../index.php?Success");
+  header("location: ../justificantes.php?Success");
   exit();
 }
 
@@ -374,7 +374,7 @@ function showStudentJustificants($conn, $controlNumber)
   $sql = "SELECT idJustificante, controlNumber, reason, JustiDay, JustiMonth, detailedInfo, fechaCreacion, estado from justificantes WHERE controlNumber = ?";
   $stmt = mysqli_stmt_init($conn);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
-    header("location: ../anteproyecto_list.php?error=wrongSTMT");
+    header("location: ../justificantes.php?error=wrongSTMT");
     exit();
   }
 
@@ -388,6 +388,138 @@ function showStudentJustificants($conn, $controlNumber)
 
   if ($resultData = mysqli_stmt_get_result($stmt)) {
     return $resultData;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function showAllStudentsJustificants($conn)
+{
+  $sql = "SELECT j.idJustificante, j.controlNumber, j.reason, j.JustiDay, j.JustiMonth, j.detailedInfo, j.fechaCreacion, j.estado, a.userFirstName, a.lastname from justificantes j INNER JOIN alumnos a ON a.controlNumber = j.controlNumber";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../justificantes.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_execute($stmt);
+
+  if ($resultData = mysqli_stmt_get_result($stmt)) {
+    return $resultData;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function isOwner($conn, $controlNumber, $justId)
+{
+  $sql = "SELECT idJustificante, controlNumber from justificantes WHERE controlNumber = ? AND idJustificante = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../justificantes.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param(
+    $stmt,
+    "ss",
+    $controlNumber,
+    $justId
+  );
+
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function isAdmin($conn, $controlNumber)
+{
+  $sql = "SELECT tipo_usuario from maestros WHERE controlNumber = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../justificantesAdmin.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param(
+    $stmt,
+    "s",
+    $controlNumber
+  );
+
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+  $row = mysqli_fetch_assoc($resultData);
+
+  if ($row["tipo_usuario"] == "Administrador") {
+    return true;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function deleteJustificante($conn, $controlNumber, $justId)
+{
+  $sql = "DELETE FROM justificantes WHERE controlNumber = ? AND idJustificante = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../justificantes.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param(
+    $stmt,
+    "ss",
+    $controlNumber,
+    $justId
+  );
+
+  mysqli_stmt_execute($stmt);
+
+  if (mysqli_stmt_get_result($stmt)) {
+    return true;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function changeJustificationState($conn, $idJust, $state)
+{
+  $sql = "UPDATE justificantes SET estado = ? WHERE idJustificante = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../justificantes.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param(
+    $stmt,
+    "ss",
+    $state,
+    $idJust
+  );
+
+  mysqli_stmt_execute($stmt);
+
+  if (mysqli_stmt_get_result($stmt)) {
+    return true;
   } else {
     return false;
   }

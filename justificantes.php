@@ -28,18 +28,20 @@ include_once "./header.php"
           while ($row = mysqli_fetch_assoc($result)) {
             echo ("
                 <tr>
-                  <th scope='row'>" . $row["idJustificante"] . "</th>
+                  <th scope='row' name='idJustificante'>" . $row["idJustificante"] . "</th>
                   <td >" . $row["reason"] . "</td>
                   <td class='overflow'>" . $row["detailedInfo"] . "</td>
                   <td>" . $row["JustiDay"] . "-" . $row["JustiMonth"] . "</td>
                   <td>" . $row["fechaCreacion"] . "</td>
                   <td class='" . $row["estado"] . "'>" . $row["estado"] . "</td>
                   <td>
-                    <div class='btn-group' role='group' aria-label='Basic example'>
-                      " . (($row['estado'] == 'Aprobado') ? '<button type="button" class="btn btn-success">Descargar</button>' : '') . "
-                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<button type="button" class="btn btn-danger">Cancelar</button>' : '') . "
-                      " . (($row['estado'] == 'Rechazado') ? '<button type="button" class="btn btn-danger">Eliminar</button>' : '') . "
-                    </div>
+                    <form action='includes/justificationFunc.php' method='POST'>
+                      <div class='btn-group' role='group' aria-label='Basic example'>
+                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-primary" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Cancelar</a>' : '') . "
+                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Eliminar</a>' : '') . "
+                      </div>
+                    </form>
                   </td>
                 </tr>
                 ");
@@ -136,17 +138,6 @@ for (let i = 1; i < 13; i++) {
 
   monthSelect.append(monthOption);
 }
-
-a = 2;
-b = 2;
-
-if (a == b) {
-  console.log("Hola!");
-} else {
-  console.log("Adios!");
-}
-
-a == b ? console.log("Hola2!") : console.log("Adios2!")
 </script>
 
 <?php
