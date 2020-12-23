@@ -642,3 +642,23 @@ function getUserAsesor($conn, $controlNumber)
 
   mysqli_stmt_close($stmt);
 }
+
+function showAllAsesores($conn)
+{
+  $sql = "SELECT ase.nombreAsesor, ase.nameAsesorInt, ase.email, ase.contactNumber, ase.companyName, ase.horasContacto, a.controlNumber from asesoresinternos ase INNER JOIN alumnos a ON a.intAsesor = ase.idAsesorInt";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../asesoresAdminTeacher.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_execute($stmt);
+
+  if ($resultData = mysqli_stmt_get_result($stmt)) {
+    return $resultData;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
