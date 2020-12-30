@@ -37,12 +37,12 @@ include_once "./header.php"
                   <td>" . $row["JustiDay"] . "-" . $row["JustiMonth"] . "</td>
                   <td>" . $row["fechaCreacion"] . "</td>
                   <td class='" . $row["estado"] . " different '>" . $row["estado"] . "</td>
-                  <td>
+                  <td class='different'>
                     <form action='includes/justificationFunc.php' method='POST'>
                       <div class='btn-group' role='group' aria-label='Basic example'>
-                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-primary different" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
-                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger different">Cancelar</a>' : '') . "
-                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger different">Eliminar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-primary" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Cancelar</a>' : '') . "
+                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Eliminar</a>' : '') . "
                       </div>
                     </form>
                   </td>

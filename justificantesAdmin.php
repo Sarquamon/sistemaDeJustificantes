@@ -41,10 +41,10 @@ include_once "./header.php"
                   <td>" . $row["JustiDay"] . "-" . $row["JustiMonth"] . "</td>
                   <td>" . $row["fechaCreacion"] . "</td>
                   <td class='" . $row["estado"] . " different '>" . $row["estado"] . "</td>
-                  <td>
+                  <td class='different'>
                     <div class='btn-group' role='group' aria-label='Basic example'>
-                      " . (($row['estado'] == 'Rechazado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=aprove&justId=' . $row["idJustificante"] . '" class="btn btn-success different">Aprobar</a>' : '') . "
-                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=reject&justId=' . $row["idJustificante"] . '" class="btn btn-danger different">Rechazar</a>' : '') . "
+                      " . (($row['estado'] == 'Rechazado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=aprove&justId=' . $row["idJustificante"] . '" class="btn btn-success">Aprobar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=reject&justId=' . $row["idJustificante"] . '" class="btn btn-danger">Rechazar</a>' : '') . "
                     </div>
                   </td>
                 </tr>
