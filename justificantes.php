@@ -7,7 +7,10 @@ include_once "./header.php"
 <div class="container">
   <div class="row">
     <div class="col">
-      <table class="table">
+      <div class="centerText">
+        <h2>Tus Justificantes</h2>
+      </div>
+      <table class="table table-font">
         <thead>
           <tr>
             <th scope="col"># Just.</th>
@@ -33,13 +36,13 @@ include_once "./header.php"
                   <td class='overflow'>" . $row["detailedInfo"] . "</td>
                   <td>" . $row["JustiDay"] . "-" . $row["JustiMonth"] . "</td>
                   <td>" . $row["fechaCreacion"] . "</td>
-                  <td class='" . $row["estado"] . "'>" . $row["estado"] . "</td>
+                  <td class='" . $row["estado"] . " different '>" . $row["estado"] . "</td>
                   <td>
                     <form action='includes/justificationFunc.php' method='POST'>
                       <div class='btn-group' role='group' aria-label='Basic example'>
-                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-primary" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
-                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Cancelar</a>' : '') . "
-                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Eliminar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-primary different" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger different">Cancelar</a>' : '') . "
+                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger different">Eliminar</a>' : '') . "
                       </div>
                     </form>
                   </td>

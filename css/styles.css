@@ -1,7 +1,41 @@
-.overflow {
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+.custom-navbar {
+  font-size: 1.2rem;
+  font-family: "Noto Sans", sans-serif;
+  background-color: #ffdd59 !important;
+}
+
+.custom-body {
+  padding-top: 2rem;
+}
+
+.centerText {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.table-font {
+  font-size: 1rem;
+}
+
+table {
+  width: 100%;
+}
+
+td:not(.different) {
+  max-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+td:hover {
+  max-width: 200px;
+  word-wrap: break-word;
+  overflow: visible;
+  white-space: unset;
 }
 
 .Aprobado {

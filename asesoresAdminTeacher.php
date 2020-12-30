@@ -7,6 +7,9 @@ include_once "./header.php"
 <div class="container">
   <div class="row">
     <div class="col">
+      <div class="centerText">
+        <h2>Asesores externos</h2>
+      </div>
       <table class="table">
         <thead>
           <tr>

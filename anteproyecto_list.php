@@ -7,6 +7,9 @@ if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === "Administ
 <div class="container">
   <div class="row">
     <div class="col">
+      <div class="centerText">
+        <h2>Lista de anteproyectos</h2>
+      </div>
       <table class="table">
         <thead>
           <tr>
@@ -28,7 +31,7 @@ if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === "Administ
                 <th scope='row'>" . $row["controlNumber"] . "</th>
                 <td>" . $row["userFirstName"] . "</td>
                 <td>" . $row["lastName"] . "</td>
-                <td> <a class='btn btn-primary' download='" . $row["anteproyectoDoc"] . "' href='uploads/" . $row["anteproyectoDoc"] . "' >Descargar</a></td>
+                <td> <a class='btn btn-primary different' download='" . $row["anteproyectoDoc"] . "' href='uploads/" . $row["anteproyectoDoc"] . "' >Descargar</a></td>
                 </tr>
                 ");
             }

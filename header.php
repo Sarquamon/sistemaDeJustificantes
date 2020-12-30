@@ -36,3 +36,4 @@ if ($tipo_usuario == "Administrador") {
 ?>
 
 <body>
+  <div class="custom-body">

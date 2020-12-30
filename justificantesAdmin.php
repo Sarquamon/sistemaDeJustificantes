@@ -7,7 +7,10 @@ include_once "./header.php"
 <div class="container">
   <div class="row">
     <div class="col">
-      <table class="table">
+      <div class="centerText">
+        <h2>Justificantes de alumnos</h2>
+      </div>
+      <table class="table table-font">
         <thead>
           <tr>
             <th scope="col"># Just.</th>
@@ -37,11 +40,11 @@ include_once "./header.php"
                   <td class='overflow'>" . $row["detailedInfo"] . "</td>
                   <td>" . $row["JustiDay"] . "-" . $row["JustiMonth"] . "</td>
                   <td>" . $row["fechaCreacion"] . "</td>
-                  <td class='" . $row["estado"] . "'>" . $row["estado"] . "</td>
+                  <td class='" . $row["estado"] . " different '>" . $row["estado"] . "</td>
                   <td>
                     <div class='btn-group' role='group' aria-label='Basic example'>
-                      " . (($row['estado'] == 'Rechazado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=aprove&justId=' . $row["idJustificante"] . '" class="btn btn-success">Aprobar</a>' : '') . "
-                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=reject&justId=' . $row["idJustificante"] . '" class="btn btn-danger">Rechazar</a>' : '') . "
+                      " . (($row['estado'] == 'Rechazado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=aprove&justId=' . $row["idJustificante"] . '" class="btn btn-success different">Aprobar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationAdminFunc.php?action=reject&justId=' . $row["idJustificante"] . '" class="btn btn-danger different">Rechazar</a>' : '') . "
                     </div>
                   </td>
                 </tr>
