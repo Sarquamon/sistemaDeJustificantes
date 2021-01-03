@@ -40,9 +40,9 @@ include_once "./header.php"
                   <td class='different'>
                     <form action='includes/justificationFunc.php' method='POST'>
                       <div class='btn-group' role='group' aria-label='Basic example'>
-                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-primary" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
-                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Cancelar</a>' : '') . "
-                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-danger">Eliminar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado') ? '<a class="btn btn-outline-primary" download="hola.docx" href="documents/hola.docx" >Descargar</a>' : '') . "
+                      " . (($row['estado'] == 'Aprobado' || $row['estado'] == 'En espera') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-outline-danger">Cancelar</a>' : '') . "
+                      " . (($row['estado'] == 'Rechazado') ? '<a href="includes/justificationFunc.php?justId=' . $row["idJustificante"] . '" class="btn btn-outline-danger">Eliminar</a>' : '') . "
                       </div>
                     </form>
                   </td>
@@ -55,13 +55,12 @@ include_once "./header.php"
       </table>
     </div>
   </div>
-  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+  <button type="button" class="btn btn-outline-primary float-right" data-toggle="modal" data-target="#exampleModal">
     Solicitar justificantes
   </button>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -80,8 +79,7 @@ include_once "./header.php"
                 <div class="col">
                   <div class="form-group">
                     <label for="reason">Razón del jusitificante:</label>
-                    <input type="text" class="form-control" name="reason" id="reason" aria-describedby="emailHelp"
-                      placeholder="Ingrese la razón de su justificante">
+                    <input type="text" class="form-control" name="reason" id="reason" aria-describedby="emailHelp" placeholder="Ingrese la razón de su justificante">
                     <small id="reasonHelp" class="form-text text-muted">Esta información se mantendrá
                       confidencial.</small>
                   </div>
@@ -106,13 +104,12 @@ include_once "./header.php"
                 <div class="col">
                   <div class="form-group">
                     <label for="descripcionDetallada">Describa detalladamente la situación:</label>
-                    <textarea class="form-control" id="descripcionDetallada" name="descripcionDetallada"
-                      rows="3"></textarea>
+                    <textarea class="form-control" id="descripcionDetallada" name="descripcionDetallada" rows="3"></textarea>
                   </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              <button type="submit" name="submit" class="btn btn-primary">Enviar solicitud</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+              <button type="submit" name="submit" class="btn btn-outline-primary">Enviar solicitud</button>
             </form>
           </div>
         </div>
@@ -123,24 +120,24 @@ include_once "./header.php"
 
 
 <script>
-let daySelect = document.getElementById("day");
+  let daySelect = document.getElementById("day");
 
-for (let i = 1; i < 32; i++) {
-  let dayOption = document.createElement("option");
-  dayOption.text = i;
-  dayOption.value = i;
-  daySelect.append(dayOption);
-}
+  for (let i = 1; i < 32; i++) {
+    let dayOption = document.createElement("option");
+    dayOption.text = i;
+    dayOption.value = i;
+    daySelect.append(dayOption);
+  }
 
-let monthSelect = document.getElementById("month");
+  let monthSelect = document.getElementById("month");
 
-for (let i = 1; i < 13; i++) {
-  let monthOption = document.createElement("option");
-  monthOption.text = i;
-  monthOption.value = i;
+  for (let i = 1; i < 13; i++) {
+    let monthOption = document.createElement("option");
+    monthOption.text = i;
+    monthOption.value = i;
 
-  monthSelect.append(monthOption);
-}
+    monthSelect.append(monthOption);
+  }
 </script>
 
 <?php

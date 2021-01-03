@@ -20,9 +20,9 @@ require_once("./header.php");
 
         echo ("
         
-        
         <form action='./includes/uploadAnteproyectoStudent_inc.php' method='POST' enctype='multipart/form-data'>
-
+        
+        <h1>Asesor Externo</h1>
         <div class='form-group'>
           <div class='form-row'>
             <div class='col'>
@@ -90,6 +90,20 @@ require_once("./header.php");
             </div>
           </div>
         </div>
+        
+        <h1>Asesor Interno</h1>
+        <div class='form-group'>
+          <div class='form-row'>
+            <div class='col'>
+              <label for='companyName'>Maestro asignado</label>
+              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["name"] . " " . $data["lastname"] . "'>
+            </div>
+            <div class='col'>
+              <label for='cargo'>Contacto</label>
+              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["maestroEmail"] . "'>
+            </div>
+          </div>
+        </div>
 
 
 
@@ -99,7 +113,7 @@ require_once("./header.php");
 
         ");
 
-        // <button type='submit' name='submit' class='btn btn-primary'>Enviar</button>
+        // <button type='submit' name='submit' class='btn btn-outline-primary'>Enviar</button>
       } else {
       ?>
       <form action="./includes/uploadAnteproyectoStudent_inc.php" method="POST" enctype="multipart/form-data">
@@ -179,7 +193,7 @@ require_once("./header.php");
 
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="studentAnteproyectoUpload">Subir</span>
+                  <span class="input-group-text" id="studentAnteproyectoUploadspan">Subir</span>
                 </div>
                 <div class="custom-file">
                   <input type="file" class="custom-file-input" id="studentAnteproyectoUpload"
@@ -216,7 +230,7 @@ require_once("./header.php");
 
 
         <br>
-        <button type="submit" name="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" name="submit" class="btn btn-outline-primary">Enviar</button>
       </form>
       <?php
       }

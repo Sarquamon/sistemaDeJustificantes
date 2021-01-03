@@ -4,23 +4,23 @@ include_once("header.php");
 if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === "Administrador" || $_SESSION['tipo_usuario'] === "Maestro")) {
 ?>
 
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="centerText">
-        <h2>Lista de anteproyectos</h2>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">N° Control</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="centerText">
+          <h2>Lista de anteproyectos</h2>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">N° Control</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
             require_once("./includes/dbh_inc.php");
             require_once("./includes/functions_inc.php");
             $result = getAllStudentFromDB($conn);
@@ -31,18 +31,18 @@ if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === "Administ
                 <th scope='row'>" . $row["controlNumber"] . "</th>
                 <td>" . $row["userFirstName"] . "</td>
                 <td>" . $row["lastName"] . "</td>
-                <td class='different'> <a class='btn btn-primary' download='" . $row["anteproyectoDoc"] . "' href='uploads/" . $row["anteproyectoDoc"] . "' >Descargar</a></td>
+                <td class='different'> <a class='btn btn-outline-primary' download='" . $row["anteproyectoDoc"] . "' href='uploads/" . $row["anteproyectoDoc"] . "' >Descargar</a></td>
                 </tr>
                 ");
             }
             ?>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
 
+      </div>
     </div>
   </div>
-</div>
 
 <?php
 } else {

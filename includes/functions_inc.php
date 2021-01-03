@@ -622,7 +622,7 @@ function updateStudentWithAsesor($conn, $controlNumber, $idAsesor)
 
 function getUserAsesor($conn, $controlNumber)
 {
-  $sql = "SELECT * from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt where controlNumber = ?;";
+  $sql = "SELECT a.anteproyectoDoc, i.nombreAsesor, i.nameAsesorInt, i.lastNameMaestro, i.email, i.contactNumber, i.companyName, i.cargo, i.horasContacto, m.nameMaestro as name, m.lastNameMaestro as lastname , m.email as maestroEmail from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt JOIN maestros m ON a.extAsesor = m.controlNumber where a.controlNumber = ?;";
   $stmt = mysqli_stmt_init($conn);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
     header("location: ../index.php?error=wrongSTMT");
@@ -661,4 +661,101 @@ function showAllAsesores($conn)
   }
 
   mysqli_stmt_close($stmt);
+}
+
+function showAllTeachers($conn)
+{
+  $sql = "SELECT controlNumber, nameMaestro, lastNameMaestro FROM maestros WHERE tipo_usuario = 'Maestro'";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../asesoresIntAdminTeacher.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_execute($stmt);
+
+  if ($resultData = mysqli_stmt_get_result($stmt)) {
+    return $resultData;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function countAllAsignedStudent($conn, $controlNumber)
+{
+  $sql = "SELECT COUNT(extAsesor) totalStudents FROM alumnos WHERE extAsesor = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../asesoresIntAdminTeacher.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "s", $controlNumber);
+  mysqli_stmt_execute($stmt);
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function showAllAsignedStudents($conn, $controlNumber)
+{
+  $sql = "SELECT controlNumber, userFirstName, lastName FROM alumnos WHERE extAsesor = ?";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../asesoresIntAdminTeacher.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "s", $controlNumber);
+  mysqli_stmt_execute($stmt);
+
+  if ($resultData = mysqli_stmt_get_result($stmt)) {
+    return $resultData;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function emptyInput($controlNumber, $controlNumberTeacher)
+{
+  if (
+    empty($controlNumber) || empty($controlNumberTeacher)
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function asignStudent($conn, $controlNumber, $controlNumberTeacher)
+{
+  $sql = "UPDATE alumnos a SET extAsesor = ? WHERE controlNumber = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../asesoresInternAdminTeacher.php?errorSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param(
+    $stmt,
+    "ss",
+    strtoupper($controlNumberTeacher),
+    strtoupper($controlNumber)
+  );
+
+  mysqli_stmt_execute($stmt);
+
+  mysqli_stmt_close($stmt);
+
+  header("location: ../asesoresInternAdminTeacher.php?Success");
+  exit();
 }

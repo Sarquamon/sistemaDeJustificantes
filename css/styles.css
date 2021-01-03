@@ -1,9 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap");
+
+* {
+  font-family: "Karla", sans-serif;
+}
 
 .custom-navbar {
-  font-size: 1.2rem;
-  font-family: "Noto Sans", sans-serif;
-  background-color: #ffdd59 !important;
+  font-size: 1.3rem;
+  background-color: #4392f1 !important;
+  /* background-color: #ffdd59 !important; */
 }
 
 .custom-body {
@@ -44,4 +48,7 @@ td:hover {
 
 .Rechazado {
   color: red;
+}
+.negritas {
+  font-weight: bold;
 }
