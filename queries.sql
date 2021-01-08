@@ -47,3 +47,10 @@ CREATE TABLE justificantes (
   PRIMARY KEY (idJustificante),
   FOREIGN KEY (controlNumber) REFERENCES alumnos(controlNumber)
 );
+
+
+SELECT a.anteproyectoDoc, i.nombreAsesor, i.nameAsesorInt, i.lastNameMaestro, i.email, i.contactNumber, i.companyName, i.cargo, i.horasContacto, m.nameMaestro as name, m.lastNameMaestro as lastname , m.email as maestroEmail from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt JOIN maestros m ON a.extAsesor = m.controlNumber where a.controlNumber = "166I0505" ;
+
+SELECT a.anteproyectoDoc, i.nombreAsesor, i.nameAsesorInt, i.lastNameMaestro, i.email, i.contactNumber, i.companyName, i.cargo, i.horasContacto from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt where a.controlNumber = '166I0505' ;
+
+SELECT m.nameMaestro as name, m.lastNameMaestro as lastname , m.email as maestroEmail from alumnos a INNER JOIN maestros m ON a.extAsesor = m.controlNumber where a.controlNumber = '166I0505' ;

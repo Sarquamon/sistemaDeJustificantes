@@ -620,12 +620,58 @@ function updateStudentWithAsesor($conn, $controlNumber, $idAsesor)
   mysqli_stmt_close($stmt);
 }
 
-function getUserAsesor($conn, $controlNumber)
+function getUserAsesores($conn, $controlNumber)
 {
   $sql = "SELECT a.anteproyectoDoc, i.nombreAsesor, i.nameAsesorInt, i.lastNameMaestro, i.email, i.contactNumber, i.companyName, i.cargo, i.horasContacto, m.nameMaestro as name, m.lastNameMaestro as lastname , m.email as maestroEmail from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt JOIN maestros m ON a.extAsesor = m.controlNumber where a.controlNumber = ?;";
   $stmt = mysqli_stmt_init($conn);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
-    header("location: ../index.php?error=wrongSTMT");
+    header("location: ./index.php?error=wrongSTMT3&controlNumber");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "s", $controlNumber);
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function getUserAsesorExt($conn, $controlNumber)
+{
+  $sql = "SELECT a.anteproyectoDoc, i.nombreAsesor, i.nameAsesorInt, i.lastNameMaestro, i.email, i.contactNumber, i.companyName, i.cargo, i.horasContacto from alumnos a INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt where a.controlNumber = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ./index.php?error=wrongSTMT1");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "s", $controlNumber);
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
+}
+
+function getUserAsesorInt($conn, $controlNumber)
+{
+  $sql = "SELECT m.nameMaestro as name, m.lastNameMaestro as lastname , m.email as maestroEmail from alumnos a INNER JOIN maestros m ON a.extAsesor = m.controlNumber where a.controlNumber = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ./index.php?error=wrongSTMT2");
     exit();
   }
 
@@ -758,4 +804,32 @@ function asignStudent($conn, $controlNumber, $controlNumberTeacher)
 
   header("location: ../asesoresInternAdminTeacher.php?Success");
   exit();
+}
+
+function getUserStudent($conn, $controlNumber)
+{
+  $sql = "SELECT a.controlNumber as studentControlNumber, a.userFirstName as studentFirstName, a.lastname as studentLastname,
+  a.career as studentCareer, a.email as studentEmail, a.semestre as studentSem, a.grupo as studentGroup, a.anteproyectoDoc,
+  i.nombreAsesor, i.nameAsesorInt, i.lastNameMaestro, i.email, i.contactNumber,
+  i.companyName, i.cargo, i.horasContacto from alumnos a
+  INNER JOIN asesoresinternos i ON a.intAsesor = i.idAsesorInt
+  JOIN maestros m ON a.extAsesor = m.controlNumber where m.controlNumber = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../index.php?error=wrongSTMT");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "s", $controlNumber);
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
+  } else {
+    return false;
+  }
+
+  mysqli_stmt_close($stmt);
 }

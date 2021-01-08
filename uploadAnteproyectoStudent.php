@@ -9,112 +9,136 @@ require_once("./header.php");
   <div class="row">
     <div class="col">
       <?php
-      include_once("./includes/check_students.php");
-      if ($data = userHasAsesor($controlNumber)) {
 
+      include_once("./includes/userHasAsesorInt.php");
+      include_once("./includes/userHasAsesorExt.php");
+
+      if ($data = userHasAsesorExt($controlNumber)) {
         if ($data["contactNumber"] == "") {
           $data["contactNumber"] = "N/A";
         } else if ($data["email"] == "") {
           $data["email"] = "N/A";
         };
+      ?>
 
-        echo ("
-        
-        <form action='./includes/uploadAnteproyectoStudent_inc.php' method='POST' enctype='multipart/form-data'>
-        
+      <form action='./includes/uploadAnteproyectoStudent_inc.php' method='POST' enctype='multipart/form-data'>
+
         <h1>Asesor Externo</h1>
-        <div class='form-group'>
-          <div class='form-row'>
-            <div class='col'>
-              <label for='externalAsesor'>Nombre(s)</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticNombre' value='" . $data["nombreAsesor"] . "'>
-            </div>
-            <div class='col'>
-              <label for='nameInput'>Apellido Paterno</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["nameAsesorInt"] . "'>
-            </div>
-            <div class='col'>
-              <label for='lastnameInput'>Apellido Materno</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["lastNameMaestro"] . "'>
-            </div>
-          </div>
-        </div>
-
-        <div class='form-group'>
-          <div class='form-row'>
-            <div class='col'>
-              <label for='email'>Email</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["email"] . "'>
-            </div>
-            <div class='col'>
-              <label for='phone'>Teléfono</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["contactNumber"] . "'>
+        <div class='container-fluid studentInfo'>
+          <div class='form-group'>
+            <div class='form-row'>
+              <div class='col'>
+                <label for='externalAsesor'>Nombre(s)</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["nombreAsesor"]) ?></span></span>
+              </div>
+              <div class='col'>
+                <label for='nameInput'>Apellido Paterno</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["nameAsesorInt"]) ?></span></span>
+              </div>
+              <div class='col'>
+                <label for='lastnameInput'>Apellido Materno</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["lastNameMaestro"]) ?></span></span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class='form-group'>
-          <div class='form-row'>
-            <div class='col'>
-              <label for='openTime'>Horas de contacto</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["horasContacto"] . "'>
+          <div class='form-group'>
+            <div class='form-row'>
+              <div class='col'>
+                <label for='email'>Email</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["email"]) ?></span></span>
+              </div>
+              <div class='col'>
+                <label for='phone'>Teléfono</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["contactNumber"]) ?></span></span>
+              </div>
             </div>
-
-            <div class='col'>
-
-            <label for='studentAnteproyectoUpload'>Archivo Subido</label>
-              <div class='input-group'>
-                <div class='input-group-prepend'>
-                  <span class='input-group-text' id='studentAnteproyectoUpload'>Archivo</span>
-                </div>
-                <div class='custom-file'>
-                  <input type='text' readonly class='form-control-plaintext' id='staticName' value='\t" . $data["anteproyectoDoc"] . "'>
+          </div>
+          <div class='form-group'>
+            <div class='form-row'>
+              <div class='col'>
+                <label for='openTime'>Horas de contacto</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["horasContacto"]) ?></span></span>
+              </div>
+              <div class='col'>
+                <label for='studentAnteproyectoUpload'>Archivo Subido</label>
+                <div class='input-group'>
+                  <div class='input-group-prepend'>
+                    <span class='input-group-text' id='studentAnteproyectoUpload'>Archivo</span>
+                  </div>
+                  <div class='custom-file'>
+                    <span class='form-control-plaintext'><span
+                        class='custom-border'><?php echo ($data["anteproyectoDoc"]) ?></span></span>
+                  </div>
                 </div>
               </div>
-
             </div>
-
           </div>
-
-        </div>
-
-        <div class='form-group'>
-          <div class='form-row'>
-            <div class='col'>
-              <label for='companyName'>Empresa</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["companyName"] . "'>
-            </div>
-            <div class='col'>
-              <label for='cargo'>Cargo</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["cargo"] . "'>
+          <div class='form-group'>
+            <div class='form-row'>
+              <div class='col'>
+                <label for='companyName'>Empresa</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["companyName"]) ?></span></span>
+              </div>
+              <div class='col'>
+                <label for='cargo'>Cargo</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($data["cargo"]) ?></span></span>
+              </div>
             </div>
           </div>
         </div>
-        
         <h1>Asesor Interno</h1>
-        <div class='form-group'>
-          <div class='form-row'>
-            <div class='col'>
-              <label for='companyName'>Maestro asignado</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["name"] . " " . $data["lastname"] . "'>
-            </div>
-            <div class='col'>
-              <label for='cargo'>Contacto</label>
-              <input type='text' readonly class='form-control-plaintext' id='staticName' value='" . $data["maestroEmail"] . "'>
+
+        <?php
+
+          if ($info = userHasAsesorInt($controlNumber)) {
+          ?>
+        <div class='container-fluid studentInfo'>
+          <div class='form-group'>
+            <div class='form-row'>
+              <div class='col'>
+                <label for='companyName'>Maestro asignado</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($info["name"] . " " . $info["lastname"]) ?></span></span>
+              </div>
+              <div class='col'>
+                <label for='cargo'>Contacto</label>
+                <span class='form-control-plaintext'><span
+                    class='custom-border'><?php echo ($info["maestroEmail"]) ?></span></span>
+              </div>
             </div>
           </div>
         </div>
-
-
-
         <br>
-        
+
       </form>
 
-        ");
+      <?php
+          } else {
+      ?>
+      <div class='container-fluid studentInfo'>
+        <div class='form-group'>
+          <div class='form-row'>
+            <div class='col'>
+              <h2>No se te ha asignado un maestro</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
 
-        // <button type='submit' name='submit' class='btn btn-outline-primary'>Enviar</button>
-      } else {
+      </form>
+
+      <?php
+          }
+        } else {
       ?>
       <form action="./includes/uploadAnteproyectoStudent_inc.php" method="POST" enctype="multipart/form-data">
 
@@ -233,8 +257,8 @@ require_once("./header.php");
         <button type="submit" name="submit" class="btn btn-outline-primary">Enviar</button>
       </form>
       <?php
-      }
-      ?>
+        }
+    ?>
     </div>
   </div>
 </div>
