@@ -52,6 +52,16 @@ include_once "./header.php"
                       <td scope='row' class='negritas'>" . $student["controlNumber"] . "</td>
                       <td >" . $student["userFirstName"] . "</td>
                       <td>" . $student["lastName"] . "</td>
+                      <td>
+                      
+                      <form action='includes/deleteAsignedStudent.php' method='POST'>
+                      <div class='btn-group' role='group' aria-label='Basic example'>
+                      <a class='btn btn-outline-danger' href='includes/deleteAsignedStudent.php?studentControlNumber=" . $student['controlNumber'] . "'>Eliminar</a>
+                      </div>
+                    </form>
+                    
+                    </td>
+
                     </tr>
                 ");
             }

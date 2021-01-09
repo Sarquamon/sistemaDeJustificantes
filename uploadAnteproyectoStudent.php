@@ -187,7 +187,7 @@ require_once("./header.php");
         <div class="form-group">
           <div class="form-row">
             <div class="col">
-              <label for="openTime">Horas de contacto</label>
+              <label for="openTime">Contactar desde:</label>
               <div class="input-group">
                 <div class="input-group-append">
                   <input type="text" class="form-control" id="openTime" name="openTime" aria-label="openTime">
@@ -200,6 +200,7 @@ require_once("./header.php");
               </div>
             </div>
             <div class="col">
+              <label for="closeTime">Contactar hasta:</label>
               <div class="input-group">
                 <div class="input-group-append">
                   <input type="text" class="form-control" id="closeTime" name="closeTime" aria-label="closeTime">
@@ -214,7 +215,7 @@ require_once("./header.php");
 
             <div class="col">
 
-
+              <label for="studentAnteproyectoUploadspan">Subir Documento</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="studentAnteproyectoUploadspan">Subir</span>
